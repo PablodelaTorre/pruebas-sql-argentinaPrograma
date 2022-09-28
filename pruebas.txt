@@ -1,0 +1,32 @@
+SELECT id, name, birthday, lower(race) AS race
+FROM demographics
+
+SELECT FLOOR(number1) AS number1, CEIL(number2) AS number2
+FROM decimals;
+
+SELECT MOD(number1,number2) AS mod
+FROM decimals;
+
+SELECT d.id, d.name 
+FROM departments AS d
+WHERE EXISTS 
+(SELECT s.name 
+ FROM sales AS s WHERE s.department_id = d.id AND s.price > 98.00)
+
+ SELECT p.age, 
+COUNT(p.age) AS people_count
+FROM people AS p
+GROUP BY p.age;
+
+SELECT age, COUNT(*) AS total_people
+FROM people
+GROUP BY age
+HAVING COUNT(*) >= 10;
+
+SELECT p.id, p.name, 
+  COUNT(s.sale) AS sale_count, 
+  RANK() OVER (PARTITION BY p.id ORDER BY p.id DESC) AS sale_rank 
+FROM people AS p
+  INNER JOIN sales AS s
+  ON p.id = s.people_id
+  GROUP BY p.id;
